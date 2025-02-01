@@ -4,22 +4,22 @@
 # ------------------------------------------------------------
 
 # Kernel
-KERNEL_NAME="MilkKernel"
-KERNEL_GIT="https://github.com/SchweGELBin/kernel_milk_davinci.git"
-KERNEL_BRANCH="vantom-14"
-KERNEL_TYPE="vantom"
+KERNEL_NAME="TeaKernel"
+KERNEL_GIT="https://github.com/nknown101/kernel_xiaomi_sm6250.git"
+KERNEL_BRANCH="kinesis-v24"
+KERNEL_TYPE="miatoll"
 
 # KernelSU
-KERNELSU_REPO="tiann/KernelSU"
-KSU_ENABLED="false"
-KSU_TARGET="v0.9.5"
+KERNELSU_REPO="rifsxd/KernelSU-Next"
+KSU_ENABLED="true"
+KSU_TARGET="v1.0.4"
 
 # Anykernel3
-ANYKERNEL3_GIT="https://github.com/SchweGELBin/AnyKernel3_davinci.git"
+ANYKERNEL3_GIT="https://github.com/clarencelol/AnyKernel3.git"
 ANYKERNEL3_BRANCH="master"
 
 # Build
-DEVICE_CODE="davinci"
+DEVICE_CODE="atoll"
 DEVICE_ARCH="arch/arm64"
 
 # Clang
@@ -54,14 +54,14 @@ if [[ $4 ]]; then
 fi
 
 
-if [[ $KERNEL_TYPE == "vantom" ]]; then
-    DEVICE_DEFCONFIG="davinci_defconfig"
+if [[ $KERNEL_TYPE == "miatoll" ]]; then
+    DEVICE_DEFCONFIG="stock_defconfig"
     COMMON_DEFCONFIG=""
 elif [[ $KERNEL_TYPE == "perf" ]]; then
-    DEVICE_DEFCONFIG="vendor/davinci.config"
-    COMMON_DEFCONFIG="vendor/sdmsteppe-perf_defconfig"
+    DEVICE_DEFCONFIG="vendor/atoll.config"
+    COMMON_DEFCONFIG="vendor/atoll-perf_defconfig"
 else
-    DEVICE_DEFCONFIG="davinci_defconfig"
+    DEVICE_DEFCONFIG="stock_defconfig"
     COMMON_DEFCONFIG=""
 fi
 
@@ -85,7 +85,7 @@ KERNEL_DIR="$WORKDIR/$KERNEL_NAME"
 
 KERNELSU_SOURCE="https://github.com/$KERNELSU_REPO"
 CLANG_SOURCE="https://github.com/$CLANG_REPO"
-README="https://github.com/SchweGELBin/kernel_milk_davinci/blob/master/README.md"
+README="https://github.com/nknown101/kernel_xiaomi_sm6250/blob/24bfe14190b05f6ee19062612e118e2a90b78b5c/README"
 
 DEVICE_DEFCONFIG_FILE="$KERNEL_DIR/$DEVICE_ARCH/configs/$DEVICE_DEFCONFIG"
 IMAGE="$KERNEL_DIR/out/$DEVICE_ARCH/boot/Image.gz"
@@ -127,7 +127,7 @@ cd $KERNEL_DIR
 
 msg "KernelSU"
 if [[ $KSU_ENABLED == "true" ]]; then
-    curl -LSs "https://raw.githubusercontent.com/$KERNELSU_REPO/main/kernel/setup.sh" | bash -s $KSU_TARGET
+    curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next-susfs/kernel/setup.sh" | bash -s next-susfs -s $KSU_TARGET
 
     echo "CONFIG_KPROBES=y" >> $DEVICE_DEFCONFIG_FILE
     echo "CONFIG_HAVE_KPROBES=y" >> $DEVICE_DEFCONFIG_FILE
